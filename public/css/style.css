@@ -85,6 +85,7 @@ li
     position: fixed;
     top: 0;
     left: 0;
+    height: 100%;
     background : white;
     border-right: 1px solid lightgray;
     -moz-box-shadow: 0px 0px 10px 0px gray;
@@ -110,7 +111,7 @@ li
     padding: 10px 20px 10px 20px;
     display: block;
     width: 200px;
-     font-size: 14px;
+    font-size: 14px;
     line-height: 14px;
     font-family: 'Droid Sans', sans-serif;
     
@@ -178,6 +179,7 @@ li
     position: fixed;
     top: 0;
     right: 0;
+    height: 100%;
     background : white;
     border-left: 1px solid lightgray;
     -moz-box-shadow: 0px 0px 10px 0px gray;
@@ -218,8 +220,8 @@ li
 #body
 {
     position: static;
-    margin: 70px auto 0 auto;
-    padding: 20px 0 0 0 ;
+    margin: 70px 0 0 0;
+    /*padding: 20px 0 0 0 ;*/
     letter-spacing: 0px;
     text-align: center;
     line-height:0px;
@@ -233,8 +235,7 @@ li
     position: relative;
     width: 300px;
     height:300px;
-    margin: 3px;
-    padding: 3px;
+    /*margin: 3px;*/
     border-color: lightgray;
     vertical-align: middle;
     padding: 20px;
@@ -301,7 +302,7 @@ li
 
 .block:hover .hiddenBlock
 {
-    height: 606px;
+    height: 600px;
     -webkit-transition: 750ms;
     -moz-transition: 750ms;
     -ms-transition: 750ms;
