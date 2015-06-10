@@ -1,55 +1,51 @@
 ﻿<!DOCTYPE html>
-
 <html>
-
-<head
-    <meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Codystar' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="style.css"/>
-    <title>Yahoo RSS Reader</title>
-    
-</head>
-
-<body>
-
-<div id="header">
-    <nav id="button">
-        Rubriques
-        <ul id="menu">
-                <h2>Rubriques</h2>
-        </ul>
-    </nav>
-    <nav id="button2">
-        A propos
-        <ul id="about">
-                <h2>A propos</h2>
-                <li>
-                    Cette page est un petit lecteur de flux RSS dédié à Yahoo Actualités.
-                    Elle vise à récupérer les fils d'information de Yahoo et à les mettre
-                    en forme d'une manière agréable (enfin, je l'espère).
-                </li>
-                <li>
-                    Ce petit projet a constitué pour moi une manière de me familiariser avec
-                    Javascript, et d'aborder plusieurs technologies Ajax (DOM, XMLHttpRequest,
-                    XML, etc.).
-                </li>
-                <li>
-                    D'un point de vue technique, le script commence par récupérer le fichier XML
-                    du flux demandé auprès d'une page PHP dédiée. Il parcourt ensuite le DOM
-                    du fichier afin d'en extraire les informations pertinentes (à l'aide de regex,
-                    si nécessaire), qu'il réinjecte ensuite au sein du DOM de la présente page.
-                </li>
-        </ul>
-    </nav>
-    <h1></h1>
-</div>
-<div id="body">
-</div>
-<div id="footer">
-    © Copyright  2014 - Thibault Goehringer
-</div>
-</body>
-<script type="text/javascript" src="script.js" charset="UTF-8"></script>  
+        <link type="text/css" rel="stylesheet" href="public\css\style.css"/>
+        <title>Yahoo RSS Reader</title>
+    </head>
+    <body>
+        <div id="header">
+            <nav id="button">
+                Rubriques
+                <ul id="menu">
+                        <h2>Rubriques</h2>
+                </ul>
+            </nav>
+            <nav id="button2">
+                A propos
+                <ul id="about">
+                        <h2>A propos</h2>
+                        <li>
+                            Cette page est un petit lecteur de flux RSS dédié à Yahoo Actualités.
+                            Elle vise à récupérer les fils d'information de Yahoo et à les mettre
+                            en forme d'une manière agréable (enfin, je l'espère).
+                        </li>
+                        <li>
+                            Ce petit projet a constitué pour moi une manière de me familiariser avec
+                            Javascript, et d'aborder plusieurs technologies Ajax (DOM, XMLHttpRequest,
+                            XML, etc.).
+                        </li>
+                        <li>
+                            D'un point de vue technique, le script commence par récupérer le fichier XML
+                            du flux demandé auprès d'une page PHP dédiée. Il parcourt ensuite le DOM
+                            du fichier afin d'en extraire les informations pertinentes (à l'aide de regex,
+                            si nécessaire), qu'il réinjecte ensuite au sein du DOM de la présente page.
+                        </li>
+                </ul>
+            </nav>
+            <h1></h1>
+        </div>
+        <div id="body">
+        </div>
+        <div id="footer">
+            © Copyright  2014 - Thibault Goehringer
+        </div>
+        <script type="text/javascript" src="public\js\jquery-1.11.3.min.js" charset="UTF-8"></script> 
+        <script type="text/javascript" src="public\js\script.js" charset="UTF-8"></script> 
+    </body>
 </html>

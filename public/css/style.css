@@ -224,6 +224,7 @@ li
     text-align: center;
     line-height:0px;
     vertical-align: top;
+    background-color: whitesmoke;
 }
 
 .block
@@ -233,6 +234,8 @@ li
     width: 300px;
     height:300px;
     margin: 3px;
+    padding: 3px;
+    border-color: lightgray;
     vertical-align: middle;
     padding: 20px;
     line-height: normal;
@@ -241,11 +244,12 @@ li
     color: white;
     text-align: left;
     text-shadow: 1px 1px 5px black;
-    -webkit-background-size: cover;
+/*    -webkit-background-size: cover;
     -o-background-size: cover;
-    -ms-background-size: cover;
-    background-size: cover;
-    background-position:center;
+    -ms-background-size: cover;*/
+    /*background-size: cover;*/
+    /*background-position:center;*/
+    background-origin: content-box; 
     cursor: pointer
 }
 
