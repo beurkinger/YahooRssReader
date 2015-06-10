@@ -224,13 +224,14 @@ li
     text-align: center;
     line-height:0px;
     vertical-align: top;
-    background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
 }
 
 .block
 {
-    display: inline-block;
-    position: relative;
+/*    display: inline-block;
+    position: relative;*/
+    float:left;
     width: 300px;
     height:300px;
     margin: 3px;
@@ -251,6 +252,12 @@ li
     /*background-position:center;*/
     background-origin: content-box; 
     cursor: pointer
+}
+
+.block:first-child
+{
+    height: 606px;
+    width: 606px;
 }
 
 .block:nth-child(6n-1)
@@ -347,6 +354,7 @@ li
 
 #footer
 {
+    clear:both;
     padding: 250px 0 0 0;
     width: 100%;
     height: 303px;
