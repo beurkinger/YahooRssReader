@@ -145,13 +145,15 @@ function RssReader(rssUrl, title, url)
 
 RssReader.prototype.printMenu = function()
 {
+    var self = this;
     var array = this.categories;
+    
     for (var category in array)
     {
         if (array[category].hasOwnProperty('rssUrl'))
         {
             var li = $('<li></li>');
-            li.append('<a href="#" name="'+array[category]['rssUrl']+'" onclick="refresh(this)">'+category +'</a>');
+            li.append('<a href="#" name="'+array[category]['rssUrl']+'">'+category +'</a>');
             if (array[category].hasOwnProperty('subCategories'))
             {
                 var subMenu = $('<ul class="subMenu"></ul>');
@@ -159,7 +161,7 @@ RssReader.prototype.printMenu = function()
                 for (var subCategory in subCategories)
                 {
                     var subLi = $('<li></li>');
-                    subLi.append('<a href="#" name = "'+subCategories[subCategory]+'" onclick="refresh(this)">'+subCategory+'</a>');
+                    subLi.append('<a href="#" name = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
                     subMenu.append(subLi);
                 }
                 li.append(subMenu);
@@ -167,6 +169,13 @@ RssReader.prototype.printMenu = function()
             this.menu.append(li);
         }
     }
+    
+    this.menu.find('a').click(function()
+    {
+        self.rssUrl = $(this).attr('name');
+        self.refresh();
+        return false;
+    });
 };
 
 RssReader.prototype.getChannel = function()
@@ -190,6 +199,7 @@ RssReader.prototype.getChannel = function()
     
     this.title = title;
     this.url = url;
+    this.itemsList = [];
     
     var items = xmlDoc.getElementsByTagName('channel')[0].getElementsByTagName('item');
     
@@ -230,15 +240,19 @@ RssReader.prototype.printChannel = function()
         var item = this.itemsList[i];
         var block = document.createElement('div');
         block.className = 'block';
-        //block.setAttribute('onclick', 'showHiddenBlock('+i+')');
-        //block.id = i;
         block.style.backgroundImage = 'url('+item.imgUrl+')';
         block.style.backgroundRepeat ='no-repeat';
         block.style.backgroundSize = 'cover';
         block.style.backgroundPosition = 'center';
         block.innerHTML = '<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title;
         document.getElementById('body').appendChild(block);
-        }
+    }
+};
+
+RssReader.prototype.refresh = function()
+{
+    this.getChannel();
+    this.printChannel();
 };
 
 var item = function (title, url, description, date, source, imgUrl)
@@ -371,12 +385,7 @@ function findBody(text)
 //    document.getElementsByTagName('BODY')[0].removeAttribute('onClick','removeHiddenBlock('+i+')');
 //}
 
-function refresh(a)
-{
-    link = a.name;
-    var currentChannel = getChannel(link);
-    currentChannel.printChannel();
-}
+
 
 function init()
 {
