@@ -201,34 +201,18 @@ RssReader.prototype.getChannel = function()
         self.url = $(xmlDoc).find('channel > link').html();
         self.itemsList = [];
         
-        var items = xmlDoc.getElementsByTagName('channel')[0].getElementsByTagName('item');
-
-        for (i=0; i < items.length; i++)
+        $(xmlDoc).find('channel item').each(function()
         {
-            var title = items[i].getElementsByTagName('title')[0].textContent;
-            var url = items[i].getElementsByTagName('link')[0].textContent;
-            var date = items[i].getElementsByTagName('pubDate')[0].textContent;
-            var description = items[i].getElementsByTagName('description')[0].textContent;
-            description = findBody(description);
-            if (items[i].getElementsByTagName('source')[0])
-            {
-                var source = items[i].getElementsByTagName('source')[0].textContent;
-            }
-            else
-            {
-                var source = '';
-            }
-            if (items[i].getElementsByTagNameNS('*', 'content')[0])
-            {
-                var imgUrl = items[i].getElementsByTagNameNS('*', 'content')[0].getAttribute('url');            
-                imgUrl = findImgUrl(imgUrl);
-            }
-            else
-            {
-                var imgUrl='';
-            }
+            var title = $(this).find('title').text();
+            var url = $(this).find('link').text();
+            var date = $(this).find('pubDate').text();
+            var description = $(this).find('description').text();
+            description = description !== undefined ? findBody(description) : '';
+            var source = $(this).find('source').text();
+            var imgUrl =  $(this).find('content').attr('url');
+            imgUrl = imgUrl !== undefined ? findImgUrl(imgUrl) : '';
             self.itemsList.push(new item(title, url, description, date, source, imgUrl));
-        }
+        });
         self.printChannel();
     })
     .fail(function(jqXHR, errorMessage)
