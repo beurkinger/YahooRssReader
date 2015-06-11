@@ -6,7 +6,7 @@ function RssReader(rssUrl, title, url)
     this.body = $('#body');
     
     this.xmlUrl = 'getXML.php';
-    this.rssUrl = rssUrl;
+    this.rssUrl = rssUrl !== undefined ? rssUrl : '';
     this.title = title;
     this.url = url;
     this.itemsList = [];
@@ -143,25 +143,29 @@ function RssReader(rssUrl, title, url)
     }; 
 };
 
+RssReader.prototype.init = function()
+{
+    this.printMenu();
+    this.getChannel();
+};
+
 RssReader.prototype.printMenu = function()
 {
     var self = this;
-    var array = this.categories;
+    var categories = this.categories;
     
-    for (var category in array)
+    for (var category in categories)
     {
-        if (array[category].hasOwnProperty('rssUrl'))
+        if (categories[category].hasOwnProperty('rssUrl'))
         {
-            var li = $('<li></li>');
-            li.append('<a href="#" name="'+array[category]['rssUrl']+'">'+category +'</a>');
-            if (array[category].hasOwnProperty('subCategories'))
+            var li = $('<li></li>').append('<a href="#" name="'+categories[category]['rssUrl']+'">'+category +'</a>');
+            if (categories[category].hasOwnProperty('subCategories'))
             {
                 var subMenu = $('<ul class="subMenu"></ul>');
-                var subCategories = array[category].subCategories;
+                var subCategories = categories[category]['subCategories'];
                 for (var subCategory in subCategories)
                 {
-                    var subLi = $('<li></li>');
-                    subLi.append('<a href="#" name = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
+                    var subLi = $('<li></li>').append('<a href="#" name = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
                     subMenu.append(subLi);
                 }
                 li.append(subMenu);
@@ -173,62 +177,65 @@ RssReader.prototype.printMenu = function()
     this.menu.find('a').click(function()
     {
         self.rssUrl = $(this).attr('name');
-        self.refresh();
+        self.getChannel();
         return false;
     });
 };
 
 RssReader.prototype.getChannel = function()
 {
-    var xmlUrl = this.xmlUrl;
-    if (this.rssUrl !== undefined && this.rssUrl !== '')
+    var self = this;
+    
+    $.ajax(
     {
-        xmlUrl += '?url='+this.rssUrl;
-    }
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", xmlUrl, false);
-    xmlHttp.send();
-    var xmlDoc = xmlHttp.responseXML;
-    
-    with (xmlDoc.getElementsByTagName('channel')[0])
+        url: self.xmlUrl,
+        type: 'GET',
+        cache: true,
+        data: { url : self.rssUrl },
+        dataType : 'xml'
+    })
+    .done(function(xmlDoc)
     {
-        var title = getElementsByTagName('title')[0].textContent;
-        title = findTitle(title);
-        var url = getElementsByTagName('link')[0].textContent;
-    }
-    
-    this.title = title;
-    this.url = url;
-    this.itemsList = [];
-    
-    var items = xmlDoc.getElementsByTagName('channel')[0].getElementsByTagName('item');
-    
-    for (i=0; i < items.length; i++)
+        var title = $(xmlDoc).find('channel > title').html();
+        self.title = findTitle(title);
+        self.url = $(xmlDoc).find('channel > link').html();
+        self.itemsList = [];
+        
+        var items = xmlDoc.getElementsByTagName('channel')[0].getElementsByTagName('item');
+
+        for (i=0; i < items.length; i++)
+        {
+            var title = items[i].getElementsByTagName('title')[0].textContent;
+            var url = items[i].getElementsByTagName('link')[0].textContent;
+            var date = items[i].getElementsByTagName('pubDate')[0].textContent;
+            var description = items[i].getElementsByTagName('description')[0].textContent;
+            description = findBody(description);
+            if (items[i].getElementsByTagName('source')[0])
+            {
+                var source = items[i].getElementsByTagName('source')[0].textContent;
+            }
+            else
+            {
+                var source = '';
+            }
+            if (items[i].getElementsByTagNameNS('*', 'content')[0])
+            {
+                var imgUrl = items[i].getElementsByTagNameNS('*', 'content')[0].getAttribute('url');            
+                imgUrl = findImgUrl(imgUrl);
+            }
+            else
+            {
+                var imgUrl='';
+            }
+            self.itemsList.push(new item(title, url, description, date, source, imgUrl));
+        }
+        self.printChannel();
+    })
+    .fail(function(jqXHR, errorMessage)
     {
-        var title = items[i].getElementsByTagName('title')[0].textContent;
-        var url = items[i].getElementsByTagName('link')[0].textContent;
-        var date = items[i].getElementsByTagName('pubDate')[0].textContent;
-        var description = items[i].getElementsByTagName('description')[0].textContent;
-        description = findBody(description);
-        if (items[i].getElementsByTagName('source')[0])
-        {
-            var source = items[i].getElementsByTagName('source')[0].textContent;
-        }
-        else
-        {
-            var source = '';
-        }
-        if (items[i].getElementsByTagNameNS('*', 'content')[0])
-        {
-            var imgUrl = items[i].getElementsByTagNameNS('*', 'content')[0].getAttribute('url');            
-            imgUrl = findImgUrl(imgUrl);
-        }
-        else
-        {
-            var imgUrl='';
-        }
-        this.itemsList.push(new item(title, url, description, date, source, imgUrl));
-    }
+        console.log('Erreur : '+errorMessage);
+    });
+    
 };
 
 RssReader.prototype.printChannel = function()
@@ -249,12 +256,6 @@ RssReader.prototype.printChannel = function()
     }
 };
 
-RssReader.prototype.refresh = function()
-{
-    this.getChannel();
-    this.printChannel();
-};
-
 var item = function (title, url, description, date, source, imgUrl)
 {
     this.title = title;
@@ -263,58 +264,7 @@ var item = function (title, url, description, date, source, imgUrl)
     this.date = date;
     this.source = source;
     this.imgUrl = imgUrl;
-    //this.printItem = printItem;
 };
-
-//function getRssUrl(category, subCategory)
-//{
-//    if (category === undefined)
-//    {
-//        return this['Une']['rssUrl'];
-//    }
-//    else
-//    {
-//        if (subCategory === undefined)
-//        {
-//            if (this[category])
-//            {
-//                return this[category]['rssUrl'];
-//            }
-//            else
-//            {
-//                return this['Une']['rssUrl'];    
-//            }
-//        }
-//        else
-//        {
-//            if (this[category]['subCategories'][subCategory])
-//            {
-//                return this[category]['subCategories'][subCategory];
-//            }
-//            else
-//            {
-//                return this['Une']['rssUrl'];   
-//            }
-//        }
-//    }
-//}
-
-
-
-
-//function createBlocks(n)
-//{
-//    for (i = 0; i < n; i++)
-//    {
-//        var block = document.createElement('div');
-//        block.className = 'block';
-//        block.id = i;
-//        block.href = '#'+i;
-//        document.getElementById('body').appendChild(block);
-//    }
-//}
-
-
 
 function findTitle(text)
 {
@@ -366,34 +316,4 @@ function findBody(text)
         return text;
     }
 }
-
-//function showHiddenBlock(i)
-//{
-//    var hiddenBlock = document.getElementById(i);
-//    hiddenBlock.classList.add('visible');
-//    setTimeout(function()
-//    {
-//        document.getElementsByTagName('BODY')[0].setAttribute('onClick','removeHiddenBlock('+i+')');
-//    }, 1);
-//    
-//}
-//
-//function removeHiddenBlock(i)
-//{
-//    var hiddenBlock = document.getElementById(i);
-//    hiddenBlock.classList.remove('visible');
-//    document.getElementsByTagName('BODY')[0].removeAttribute('onClick','removeHiddenBlock('+i+')');
-//}
-
-
-
-function init()
-{
-    rssReader = new RssReader();
-    rssReader.printMenu();
-    rssReader.getChannel();
-    rssReader.printChannel();
-}
-
-window.onload = init();
 
