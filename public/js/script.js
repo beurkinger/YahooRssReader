@@ -1,16 +1,21 @@
-//Class Reader
+//Classe Reader
 function RssReader(rssUrl, title, url)
 {
+    //Containeurs du menu, du titre, et du corps de la page
     this.menu = $('#menu');
     this.h1 = $('#header H1');
     this.body = $('#body');
     
+    //Fichier php permettant de récupérer le flux rss, url du flux en question,
+    //titre de la rubtrique, url de la rubrique sur le site Yahoo, liste des 
+    //articles de la rubrique
     this.xmlUrl = 'getXML.php';
     this.rssUrl = rssUrl !== undefined ? rssUrl : '';
     this.title = title;
     this.url = url;
     this.itemsList = [];
     
+    //Liste des rubriques et sous rubriques, avec le lien des fluxs rss associés
     this.categories = 
     {
         'Une' :
@@ -143,12 +148,14 @@ function RssReader(rssUrl, title, url)
     }; 
 };
 
+//Méthode permettant d'initialiser le reader
 RssReader.prototype.init = function()
 {
     this.printMenu();
     this.getChannel();
 };
 
+//Méthode permettant de construirele menu
 RssReader.prototype.printMenu = function()
 {
     var self = this;
@@ -158,14 +165,14 @@ RssReader.prototype.printMenu = function()
     {
         if (categories[category].hasOwnProperty('rssUrl'))
         {
-            var li = $('<li></li>').append('<a href="#" name="'+categories[category]['rssUrl']+'">'+category +'</a>');
+            var li = $('<li></li>').append('<a href="#" rssUrl="'+categories[category]['rssUrl']+'">'+category +'</a>');
             if (categories[category].hasOwnProperty('subCategories'))
             {
                 var subMenu = $('<ul class="subMenu"></ul>');
                 var subCategories = categories[category]['subCategories'];
                 for (var subCategory in subCategories)
                 {
-                    var subLi = $('<li></li>').append('<a href="#" name = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
+                    var subLi = $('<li></li>').append('<a href="#" rssUrl = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
                     subMenu.append(subLi);
                 }
                 li.append(subMenu);
@@ -176,12 +183,13 @@ RssReader.prototype.printMenu = function()
     
     this.menu.find('a').click(function()
     {
-        self.rssUrl = $(this).attr('name');
+        self.rssUrl = $(this).attr('rssUrl');
         self.getChannel();
         return false;
     });
 };
 
+//Méthode permettant de récupérer et de filter le flux RSS d'une rubrique
 RssReader.prototype.getChannel = function()
 {
     var self = this;
@@ -197,7 +205,7 @@ RssReader.prototype.getChannel = function()
     .done(function(xmlDoc)
     {
         var title = $(xmlDoc).find('channel > title').html();
-        self.title = findTitle(title);
+        self.title = self.findTitle(title);
         self.url = $(xmlDoc).find('channel > link').html();
         self.itemsList = [];
         
@@ -207,10 +215,10 @@ RssReader.prototype.getChannel = function()
             var url = $(this).find('link').text();
             var date = $(this).find('pubDate').text();
             var description = $(this).find('description').text();
-            description = description !== undefined ? findBody(description) : '';
+            description = $('<div>'+description+'</div>').text();
             var source = $(this).find('source').text();
             var imgUrl =  $(this).find('content').attr('url');
-            imgUrl = imgUrl !== undefined ? findImgUrl(imgUrl) : '';
+            imgUrl = imgUrl !== undefined ? self.findImgUrl(imgUrl) : '';
             self.itemsList.push(new item(title, url, description, date, source, imgUrl));
         });
         self.printChannel();
@@ -222,6 +230,7 @@ RssReader.prototype.getChannel = function()
     
 };
 
+//Méthode permettant d'afficher une rubrique
 RssReader.prototype.printChannel = function()
 {
     this.h1.html('<a href="'+this.url+'">'+this.title+'</a>');
@@ -229,28 +238,18 @@ RssReader.prototype.printChannel = function()
     for (i=0; i < this.itemsList.length; i++)
     {
         var item = this.itemsList[i];
-        var block = document.createElement('div');
-        block.className = 'block';
-        block.style.backgroundImage = 'url('+item.imgUrl+')';
-        block.style.backgroundRepeat ='no-repeat';
-        block.style.backgroundSize = 'cover';
-        block.style.backgroundPosition = 'center';
-        block.innerHTML = '<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title;
-        document.getElementById('body').appendChild(block);
+        var block = $('<div></div>').addClass('block');
+        block.css('backgroundImage','url('+item.imgUrl+')');
+        block.css('backgroundRepeat', 'no-repeat');
+        block.css('backgroundSize', 'cover');
+        block.css('backgroundPosition', 'center');
+        block.html('<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title);
+        this.body.append(block);
     }
 };
 
-var item = function (title, url, description, date, source, imgUrl)
-{
-    this.title = title;
-    this.url = url;
-    this.description = description;
-    this.date = date;
-    this.source = source;
-    this.imgUrl = imgUrl;
-};
-
-function findTitle(text)
+//Méthode permettant de filter le titre d'un article
+RssReader.prototype.findTitle = function(text)
 {
     var regEx = /(?:News)\s(.*)\s(?:\|)/
     var title = text.match(regEx);
@@ -259,23 +258,17 @@ function findTitle(text)
         
         return title[1];
     }
-    else
+    var regEx = /(.*)\s(?:\|)/
+    var title = text.match(regEx);
+    if (title)
     {
-        var regEx = /(.*)\s(?:\|)/
-        var title = text.match(regEx);
-        if (title)
-        {
-            return title[1];
-        }
-        else
-        {
-            return 'Yahoo Actualités';
-        }
+        return title[1];
     }
-}
-    
+    return 'Yahoo Actualités';
+};
 
-function findImgUrl(url)
+//Méthode permettant de filtrer l'url de l'image d'un article
+RssReader.prototype.findImgUrl = function(url)
 {
     var regEx = /(?:http:\/\/|https:\/\/)(?:.*)((http:\/\/|https:\/\/)(.*))/;
     var imgUrl = url.match(regEx);
@@ -285,19 +278,15 @@ function findImgUrl(url)
         return imgUrl[1]; 
     }
     return url;   
-}
+};
 
-function findBody(text)
+//Classe représentant un article
+function item(title, url, description, date, source, imgUrl)
 {
-    var regEx = /(?:(?:<p>)?(?:.*)(?:<\/a>))(.*)(?:<\/p>)?/;
-    var body = text.match(regEx);
-    if (body)
-    {
-        return body[1];
-    }
-    else
-    {
-        return text;
-    }
-}
-
+    this.title = title;
+    this.url = url;
+    this.description = description;
+    this.date = date;
+    this.source = source;
+    this.imgUrl = imgUrl;
+};
