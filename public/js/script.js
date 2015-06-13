@@ -194,7 +194,15 @@ RssReader.prototype.printMenu = function()
     
     this.menuButton.click(function()
     {
-        self.menuContent.toggleClass('menu-open');
+        if (self.menuContent.hasClass('menu-open'))
+        {
+            self.menuContent.removeClass('menu-open').addClass('menu-close').delay(200);
+        }
+        else
+        {
+            self.menuContent.removeClass('menu-close').addClass('menu-open');
+        }
+        return false;
     });
     
     this.menuContent.hover(function()

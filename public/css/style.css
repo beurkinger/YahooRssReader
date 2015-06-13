@@ -137,7 +137,7 @@ li
     color: #000000;
     opacity: 0;
     transition-delay: 500ms !important;
-    transition: left 3s, opacity 3s;
+    transition: left 3s, opacity 1s;
 }
 
 #menu-content.menu-open, #menu-content:hover
@@ -147,6 +147,14 @@ li
     opacity: 1;
     transition-delay: 0s !important;
     transition: left 200ms, opacity 200ms;
+}
+
+#menu-content.menu-close
+{
+    left: -100%;
+    opacity: 0;
+    transition-delay: 0s !important;
+    transition: left 3s, opacity 1s;
 }
 
 #menu-content h2
