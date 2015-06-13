@@ -19,11 +19,18 @@ body
 {
     background: #FFFFFF;
     font-family: 'Droid Sans', sans-serif;
+    background-color: whitesmoke;
 }
 
 a
 {
+    color: #058b7b;
     text-decoration : none;    
+}
+
+a:hover
+{
+    text-decoration : underline;   
 }
 
 li
@@ -39,11 +46,18 @@ li
     left : 0px;
     width: 100%;
     height: 70px;
-    background: #FFFFFF;
-    -moz-box-shadow: 0px 0px 20px 0px gray;
-    -webkit-box-shadow: 0px 0px 20px 0px gray;
-    box-shadow: 0px 0px 20px 0px gray;
+    /*background: #FFFFFF;*/
+    background: #058b7b;
+    /*-moz-box-shadow: 0px 0px 20px 0px gray;*/
+    /*-webkit-box-shadow: 0px 0px 20px 0px gray;*/
+    /*box-shadow: 0px 0px 20px 0px gray;*/
+    box-shadow: 0 2px 10px rgba(0,0,0,0.26);
     border-bottom: 1px solid lightgray;
+}
+
+#header a:hover
+{
+    test-decoration: none;
 }
 
 #header h1
@@ -52,14 +66,10 @@ li
     text-align: center;
     line-height: 40px;
     font-size: 40px;
-    font-family: 'Cinzel', serif;
+    font-family: 'Cinzel', georgia, serif;
     margin: 15px;
     letter-spacing: 10px;
-}
-
-#header h1 a
-{
-    color: #058b7b;
+    color: #000000;
 }
 
 #button
@@ -71,6 +81,7 @@ li
     margin: 22px 18px 21px 22px;
     font-size: 26px;
     font-family: 'Codystar', cursive;
+    color: #FFFFFF;
 }
 
 #button:hover #menu
@@ -93,6 +104,7 @@ li
     box-shadow: 0px 0px 10px 0px gray;
     font-style: normal;
     font-weight: normal;
+    color: #000000;
 }
 
 #menu h2
@@ -165,6 +177,7 @@ li
     margin: 22px 22px 21px 18px;
     font-size: 26px;
     font-family: 'Codystar', cursive;
+    color: #FFFFFF;
 }
 
 #button2:hover #about
@@ -187,6 +200,7 @@ li
     box-shadow: 0px 0px 10px 0px gray;
     font-style: normal;
     font-weight: normal;
+    color: #000000;
 }
 
 #about h2
@@ -226,7 +240,6 @@ li
     text-align: center;
     line-height:0px;
     vertical-align: top;
-    /*background-color: whitesmoke;*/
 }
 
 .block
@@ -252,7 +265,6 @@ li
     -ms-background-size: cover;*/
     /*background-size: cover;*/
     /*background-position:center;*/
-    background-origin: content-box; 
     cursor: pointer
 }
 
@@ -363,4 +375,128 @@ li
     background-image:linear-gradient(white, lightgray);
     text-align: center;
     color: #758C8C;
+}
+
+.paper
+{
+    display: inline-block;
+    position: relative;
+    width: 600px;
+    height:300px;
+    margin: 3px;
+    border-color: lightgray;
+    vertical-align: middle;
+    padding: 20px;
+    line-height: normal;
+    letter-spacing: normal;
+    background-color: white;
+    box-shadow: 0 0px 10px rgba(0,0,0,0.10);
+    text-align: left;
+    
+}
+
+.paper:hover
+{
+    box-shadow: 0 2px 5px rgba(0,0,0,0.20);
+    
+}
+
+.paper-left
+{
+    float: left;
+    width: 150px;
+}
+
+.paper-image
+{
+    display: block;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-image: url('http://media.zenfs.com/fr_FR/News/AFP/89d98cc39b6194e862f0a9c5b8353631238cd6eb.jpg');
+    background-size: cover; 
+    background-position: 50% 50%; 
+    background-repeat: no-repeat;
+    margin: 0 0 20px 0;
+}
+
+.paper-image:hover 
+{
+    border-radius: 5%;
+    transition: border-radius 400ms;
+    
+}
+
+/*.paper-hidden-image
+{
+    transiton-delay:1s;
+    z-index: 1000;
+    positon: absolute;
+    top:0;
+    width: 560px;
+    height: 260px;
+    background: white;
+    display: none;
+    background-image: url('http://media.zenfs.com/fr_FR/News/AFP/89d98cc39b6194e862f0a9c5b8353631238cd6eb.jpg');
+    background-size: contain;
+    background-position: 50% 50%; 
+    background-repeat: no-repeat;
+}
+
+.paper-image:hover .paper-hidden-image
+{
+    display: block;
+}*/
+
+.paper-title
+{
+    color: #058b7b;
+    font-size: 18px;
+    font-family: 'Cinzel', georgia, serif;
+    text-align: justify;
+    margin: 0 0 10px 170px;
+}
+
+.paper-content
+{
+    font-size: 14px;
+    color: #555;
+    text-align: justify;
+    line-height: 130%;
+    margin: 0 0 10px 170px;
+}
+
+.paper-content:first-letter
+{
+    float:left;
+    padding: 8px 8px 0 0;
+    font-size: 28px;
+}
+
+.paper-source
+{
+    font-size: 14px;
+    color: #555;
+    text-align: justify;
+    margin: 0 0 10px 170px;
+    font-style: italic;
+}
+
+.paper-link
+{
+    font-family: 'Cinzel', georgia, serif;
+    font-size: 19px;
+    color: #555;
+    text-align: center;
+}
+
+.paper-link a
+{
+    color: inherit;
+}
+
+.paper-link a:hover
+{
+    background-color: lightyellow;
+    text-decoration: none;
 }

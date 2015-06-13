@@ -233,19 +233,24 @@ RssReader.prototype.getChannel = function()
 //Méthode permettant d'afficher une rubrique
 RssReader.prototype.printChannel = function()
 {
+    var self = this;
     this.h1.html('<a href="'+this.url+'">'+this.title+'</a>');
-    this.body.empty();
-    for (i=0; i < this.itemsList.length; i++)
+    this.body.fadeOut(400, function()
     {
-        var item = this.itemsList[i];
-        var block = $('<div></div>').addClass('block');
-        block.css('backgroundImage','url('+item.imgUrl+')');
-        block.css('backgroundRepeat', 'no-repeat');
-        block.css('backgroundSize', 'cover');
-        block.css('backgroundPosition', 'center');
-        block.html('<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title);
-        this.body.append(block);
-    }
+        var buffer = $('<div></div>');
+        for (i=0; i < self.itemsList.length; i++)
+        {
+            var item = self.itemsList[i];
+            var block = $('<div></div>').addClass('block');
+            block.css('backgroundImage','url('+item.imgUrl+')');
+            block.css('backgroundRepeat', 'no-repeat');
+            block.css('backgroundSize', 'cover');
+            block.css('backgroundPosition', 'center');
+            block.html('<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title);
+            buffer.append(block);
+        }
+        $(this).html(buffer.html()).slideDown(400);
+    });
 };
 
 //Méthode permettant de filter le titre d'un article

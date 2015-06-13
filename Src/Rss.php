@@ -9,29 +9,37 @@ namespace Src;
 
 class Rss
 {
-    const DEF_HEADER = 'Content-type: text/xml ; charset=utf-8';
+    const DEF_HEADER = 'Xml-type: text/xml ; charset=utf-8';
+    const MAX_TRIES = 10;
     
     private $sourceUrl;
     private $header;
-    private $content;
+    private $xml;
     
-    function __construct($sourceUrl, $content = '', $header = self::DEF_HEADER)
+    function __construct($sourceUrl, $header = self::DEF_HEADER)
     {
         $this->setSourceUrl($sourceUrl);
         $this->setHeader($header);
-        $this->setContent($content);
     }
     
-    function getXML()
+    function getXmlFile()
     {
-        $xml = new \SimpleXMLElement($this->getContent());
         header($this->getHeader());
-        echo $xml->asXml();
+        echo $this->getXML()->asXml();
     }
     
-    function retrieveContent()
+    function retrieveXml()
     {
-        $this->setContent(file_get_contents($this->getSourceUrl()));
+        libxml_use_internal_errors(true);
+        $tries = 0;
+        do
+        {
+            $string = file_get_contents($this->getSourceUrl());
+            $xml = simplexml_load_string($string);
+        }
+        while($xml === false && $tries <= self::MAX_TRIES);
+        
+        $this->setXml($xml);
         return $this;
     }
     
@@ -45,9 +53,9 @@ class Rss
         return $this->header;
     }
 
-    function getContent()
+    function getXml()
     {
-        return $this->content;
+        return $this->xml;
     }
 
     function setSourceUrl($sourceUrl)
@@ -62,9 +70,9 @@ class Rss
         return $this;
     }
 
-    function setContent($content)
+    function setXml(\SimpleXMLElement $xml)
     {
-        $this->content = (string) $content;
+        $this->xml = $xml;
         return $this;
     }
 }
