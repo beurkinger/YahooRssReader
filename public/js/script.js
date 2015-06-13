@@ -3,8 +3,12 @@ function RssReader(rssUrl, title, url)
 {
     //Containeurs du menu, du titre, et du corps de la page
     this.menu = $('#menu');
-    this.h1 = $('#header H1');
-    this.body = $('#body');
+    this.menuButton = $('#menu-button');
+    this.menuContent = $('#menu-content');
+    this.pageTitle = $('#header-title');
+    this.paperBox = $('#paper-box');
+//    this.leftColumn = $('#column-left', this.paperBox);
+//    this.rightColumn = $('#column-right', this.paperBox);
     
     //Fichier php permettant de récupérer le flux rss, url du flux en question,
     //titre de la rubtrique, url de la rubrique sur le site Yahoo, liste des 
@@ -177,15 +181,25 @@ RssReader.prototype.printMenu = function()
                 }
                 li.append(subMenu);
             }
-            this.menu.append(li);
+            this.menuContent.append(li);
         }
     }
     
-    this.menu.find('a').click(function()
+    this.menuContent.find('a').click(function()
     {
         self.rssUrl = $(this).attr('rssUrl');
         self.getChannel();
         return false;
+    });
+    
+    this.menuButton.click(function()
+    {
+        self.menuContent.toggleClass('menu-open');
+    });
+    
+    this.menuContent.hover(function()
+    {
+        self.menuContent.removeClass('menu-open');
     });
 };
 
@@ -193,7 +207,7 @@ RssReader.prototype.printMenu = function()
 RssReader.prototype.getChannel = function()
 {
     var self = this;
-    
+    this.paperBox.html('<div id="spinner"><i class="fa fa-circle-o-notch fa-spin"></i></div>');
     $.ajax(
     {
         url: self.xmlUrl,
@@ -217,9 +231,10 @@ RssReader.prototype.getChannel = function()
             var description = $(this).find('description').text();
             description = $('<div>'+description+'</div>').text();
             var source = $(this).find('source').text();
+            var sourceUrl = $(this).find('source').attr('href');
             var imgUrl =  $(this).find('content').attr('url');
             imgUrl = imgUrl !== undefined ? self.findImgUrl(imgUrl) : '';
-            self.itemsList.push(new item(title, url, description, date, source, imgUrl));
+            self.itemsList.push(new item(title, url, description, date, source, sourceUrl, imgUrl));
         });
         self.printChannel();
     })
@@ -234,23 +249,26 @@ RssReader.prototype.getChannel = function()
 RssReader.prototype.printChannel = function()
 {
     var self = this;
-    this.h1.html('<a href="'+this.url+'">'+this.title+'</a>');
-    this.body.fadeOut(400, function()
+    this.pageTitle.html('<a href="'+this.url+'">'+this.title+'</a>');
+    var leftBuffer = $('<div></div>').attr('id', 'column-left');
+    var rightBuffer = $('<div></div>').attr('id', 'column-right');
+    for (i=0; i < self.itemsList.length; i++)
     {
-        var buffer = $('<div></div>');
-        for (i=0; i < self.itemsList.length; i++)
+        isOdd = i % 2;
+        if (!isOdd)
         {
-            var item = self.itemsList[i];
-            var block = $('<div></div>').addClass('block');
-            block.css('backgroundImage','url('+item.imgUrl+')');
-            block.css('backgroundRepeat', 'no-repeat');
-            block.css('backgroundSize', 'cover');
-            block.css('backgroundPosition', 'center');
-            block.html('<a class="hiddenBlock" href="'+item.url+'" id="'+i+'"><h3>'+item.title+'</h3><img src="'+item.imgUrl+'"/><date>'+item.date+'</date><aside>'+item.source+'</aside><article>'+item.description+'</article></a>'+ item.title);
-            buffer.append(block);
+            leftBuffer.append(self.itemsList[i].getHtml());
         }
-        $(this).html(buffer.html()).slideDown(400);
+        else
+        {
+            rightBuffer.append(self.itemsList[i].getHtml());
+        }
+    }
+    self.paperBox.fadeOut(400, function()
+    {
+        $(this).html('').append(leftBuffer).append(rightBuffer).slideDown(400);
     });
+
 };
 
 //Méthode permettant de filter le titre d'un article
@@ -286,12 +304,53 @@ RssReader.prototype.findImgUrl = function(url)
 };
 
 //Classe représentant un article
-function item(title, url, description, date, source, imgUrl)
+function item(title, url, description, date, source, sourceUrl, imgUrl)
 {
     this.title = title;
     this.url = url;
     this.description = description;
     this.date = date;
     this.source = source;
+    this.sourceUrl = sourceUrl;
     this.imgUrl = imgUrl;
+};
+
+item.prototype.getHtml = function()
+{
+    var paper =     $(document.createElement('div'))
+                    .addClass('paper');
+    
+    var left =      $(document.createElement('div'))
+                    .addClass('paper-left');
+    
+    var image =     $(document.createElement('div'))
+                    .addClass('paper-image')
+                    .css('backgroundImage','url('+this.imgUrl+')')
+                    .css('backgroundRepeat', 'no-repeat')
+                    .css('backgroundSize', 'cover')
+                    .css('backgroundPosition', 'center');
+    
+    var link =      $(document.createElement('div'))
+                    .addClass('paper-link')
+                    .html('<a href="this.sourceUrl'+this.url+'" target="_blank">Voir l\'article</a>');
+    
+    var title =     $(document.createElement('div'))
+                    .addClass('paper-title')
+                    .html(this.title);
+    
+    var content =   $(document.createElement('div'))
+                    .addClass('paper-content')
+                    .html(this.description); 
+            
+    var source =    $(document.createElement('div'))
+                    .addClass('paper-source')
+                    .html('Source : <a href="">'+this.source+'</a>'); 
+    
+    left            .append(image)
+                    .append(link);
+    
+    return paper    .append(left)
+                    .append(title)
+                    .append(content)
+                    .append(source);
 };
