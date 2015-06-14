@@ -81,7 +81,7 @@ li
 
 #menu
 {
-    z-index: 100;
+    z-index: 40;
     position: fixed;
     top: 0;
     left: 0;
@@ -121,7 +121,7 @@ li
 
 #menu-content
 {
-    z-index: 100;
+    z-index: 60;
     position: fixed;
     top: 70px;
     /*top: 0;*/
@@ -200,20 +200,32 @@ li
 #menu-content a:hover
 {
     color:#058b7b;
+    font-weight: bold;
 }
 
-#menu-content li .subMenu
+.subMenu
 {
     display: none;
     position: absolute;
     top: -80px;
     left: 95%;
     padding-top: 15px;
-    background : white;
+    background : #FFFFFF;
     border-right: 1px solid lightgray;
-    -moz-box-shadow: 0px 0px 10px 0px gray;
-    -webkit-box-shadow: 0px 0px 10px 0px gray;
     box-shadow: 0px 0px 10px 0px gray;
+}
+
+.subMenu:before
+{
+    position: absolute;
+    top: 88px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 16px 9px 0;
+    border-color: transparent #FFFFFF transparent transparent;
+    content: " ";
 }
 
 #menu-content li:hover .subMenu
@@ -286,7 +298,6 @@ li
     border-radius: 50%;
     margin: 0 0 20px 0;
     background-color: aliceblue;
-    /*background-image: url('http://media.zenfs.com/fr_FR/News/AFP/89d98cc39b6194e862f0a9c5b8353631238cd6eb.jpg');*/
     background-size: cover; 
     background-position: 50% 50%; 
     background-repeat: no-repeat;
@@ -295,8 +306,44 @@ li
 .paper-image:hover 
 {
     border-radius: 5%;
+    cursor: pointer;
     transition: border-radius 400ms; 
 }
+
+.paper-hidden
+{
+    z-index: 30;
+    position: fixed;
+    top:70px;
+    left:0;
+    width: 100%;
+    height: 0;
+    background: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: height 200ms;
+}
+
+.paper-hidden.paper-hidden-display
+{
+    height: 100%;
+    transition: height 400ms;
+}
+
+.paper-hidden img
+{
+    display: none;
+    height: auto;
+    width: auto;
+    margin: 50px;
+    padding: 20px;
+    background: #FFFFFF;
+}
+
+.paper-hidden.paper-hidden-display img
+{
+    display: inline;
+}
+
 
 .paper-link
 {
@@ -317,33 +364,12 @@ li
     text-decoration: none;
 }
 
-/*.paper-hidden-image
-{
-    transiton-delay:1s;
-    z-index: 1000;
-    positon: absolute;
-    top:0;
-    width: 560px;
-    height: 260px;
-    background: white;
-    display: none;
-    background-image: url('http://media.zenfs.com/fr_FR/News/AFP/89d98cc39b6194e862f0a9c5b8353631238cd6eb.jpg');
-    background-size: contain;
-    background-position: 50% 50%; 
-    background-repeat: no-repeat;
-}
-
-.paper-image:hover .paper-hidden-image
-{
-    display: block;
-}*/
-
 .paper-title
 {
     color: #058b7b;
     font-size: 18px;
     font-family: 'Cinzel', georgia, serif;
-    text-align: justify;
+    text-align: left;
     margin: 0 0 10px 170px;
 }
 
@@ -379,4 +405,8 @@ li
     padding-right: 5px;
 }
 
+.clear
+{
+    clear: both;
+}
 

@@ -155,12 +155,12 @@ function RssReader(rssUrl, title, url)
 //Méthode permettant d'initialiser le reader
 RssReader.prototype.init = function()
 {
-    this.printMenu();
+    this.initMenu();
     this.getChannel();
 };
 
 //Méthode permettant de construirele menu
-RssReader.prototype.printMenu = function()
+RssReader.prototype.initMenu = function()
 {
     var self = this;
     var categories = this.categories;
@@ -274,7 +274,10 @@ RssReader.prototype.printChannel = function()
     }
     self.paperBox.fadeOut(400, function()
     {
-        $(this).html('').append(leftBuffer).append(rightBuffer).slideDown(400);
+        $(this).html('').append(leftBuffer)
+                        .append(rightBuffer)
+                        .append('<div class="clear"></div>')
+                        .slideDown(400);
     });
 
 };
@@ -328,6 +331,10 @@ item.prototype.getHtml = function()
     var paper =     $(document.createElement('div'))
                     .addClass('paper');
     
+    var hidden =    $(document.createElement('div'))
+                    .addClass('paper-hidden')
+                    .html('<img src="'+this.imgUrl+'"/>');
+    
     var left =      $(document.createElement('div'))
                     .addClass('paper-left');
     
@@ -340,7 +347,7 @@ item.prototype.getHtml = function()
     
     var link =      $(document.createElement('div'))
                     .addClass('paper-link')
-                    .html('<a href="this.sourceUrl'+this.url+'" target="_blank">Voir l\'article</a>');
+                    .html('<a href="'+this.url+'" target="_blank">Voir l\'article</a>');
     
     var title =     $(document.createElement('div'))
                     .addClass('paper-title')
@@ -352,13 +359,28 @@ item.prototype.getHtml = function()
             
     var source =    $(document.createElement('div'))
                     .addClass('paper-source')
-                    .html('Source : <a href="">'+this.source+'</a>'); 
+                    .html('Source : <a href="'+this.sourceUrl+'">'+this.source+'</a>'); 
     
     left            .append(image)
                     .append(link);
     
-    return paper    .append(left)
+    paper           .append(hidden)
+                    .append(left)
                     .append(title)
                     .append(content)
                     .append(source);
+            
+    image.click(function()
+    {
+        hidden.addClass('paper-hidden-display');
+        return false;
+    });
+    
+    hidden.click(function()
+    {
+        hidden.removeClass('paper-hidden-display');
+        return false;
+    });
+    
+    return paper;
 };
