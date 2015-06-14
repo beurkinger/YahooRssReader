@@ -226,9 +226,10 @@ RssReader.prototype.getChannel = function()
     })
     .done(function(xmlDoc)
     {
-        var title = $(xmlDoc).find('channel > title').html();
+        var channel = $(xmlDoc).find('channel');
+        var title = channel.find('title').first().text();
         self.title = self.findTitle(title);
-        self.url = $(xmlDoc).find('channel > link').html();
+        self.url = channel.find('link').first().text();
         self.itemsList = [];
         
         $(xmlDoc).find('channel item').each(function()

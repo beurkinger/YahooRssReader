@@ -314,13 +314,14 @@ li
 {
     z-index: 30;
     position: fixed;
-    top:70px;
+    top:0;
     left:0;
     width: 100%;
     height: 0;
     background: rgba(0, 0, 0, 0.3);
     text-align: center;
     transition: height 200ms;
+    overflow: hidden;
 }
 
 .paper-hidden.paper-hidden-display
@@ -333,10 +334,12 @@ li
 {
     display: none;
     height: auto;
+    max-height: 100%;
     width: auto;
-    margin: 50px;
+    border-top: 90px solid transparent;
     padding: 20px;
     background: #FFFFFF;
+    background-clip: padding-box;
 }
 
 .paper-hidden.paper-hidden-display img
@@ -379,21 +382,22 @@ li
     color: #555;
     text-align: justify;
     line-height: 130%;
-    margin: 0 0 10px 170px;
+    margin: 0 0 20px 170px;
 }
 
 .paper-content:first-letter
 {
     float:left;
-    padding: 8px 8px 0 0;
+    padding: 8px 4px 0 0;
     font-size: 34px;
+    color: #777 ;
 }
 
 .paper-source
 {
-    font-size: 14px;
+    font-size: 13px;
     color: #777;
-    text-align: justify;
+    text-align: right;
     margin: 0 0 10px 170px;
 }
 
