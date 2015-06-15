@@ -321,10 +321,48 @@ function item(title, url, description, date, source, sourceUrl, imgUrl)
     this.title = title;
     this.url = url;
     this.description = description;
-    this.date = date;
+    this.date = new Date(date);
     this.source = source;
     this.sourceUrl = sourceUrl;
     this.imgUrl = imgUrl;
+};
+
+item.prototype.getDateString = function()
+{
+    var today = new Date();
+    
+    if(this.date.getDate() === today.getDate())
+    {
+        var diff = parseInt((today.getTime() - this.date.getTime()) / (1000 * 60));
+        if (diff <= 60)
+        {
+            return 'il y a '+diff+' minutes';
+        }
+        else
+        {
+            var hours = Math.floor(diff / 60);
+            var minutes = diff % 60;
+            var s1 = hours > 1 ? 's' : '';
+            var s2 = minutes > 1 ? 's' : '';
+            return 'il y a '+hours+' heure'+s1+' et '+minutes+' minute'+s2;
+        }
+    }
+    
+    if ((this.date.getDay() + 1 === today.getDay()) 
+            || (this.date.getDay() === 6 && today.getDay() === 0))
+    {
+        return 'hier, '+this.date.getHours()+':'+this.date.getMinutes();
+    }
+    else
+    {
+        var days =      ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 
+                        'vendredi', 'samedi'];
+        var months =    ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 
+                        'juillet', 'août', 'septembre', 'octobre', 'novembre', 
+                        'décembre'];
+        return  days[this.date.getDay()]+' '+this.date.getDate()+' '
+                +months[this.date.getMonth()];
+    }
 };
 
 item.prototype.getHtml = function()
@@ -354,6 +392,10 @@ item.prototype.getHtml = function()
                     .addClass('paper-title')
                     .html(this.title);
     
+    var date =   $(document.createElement('div'))
+                    .addClass('paper-date')
+                    .html(this.getDateString()); 
+    
     var content =   $(document.createElement('div'))
                     .addClass('paper-content')
                     .html(this.description); 
@@ -368,6 +410,7 @@ item.prototype.getHtml = function()
     paper           .append(hidden)
                     .append(left)
                     .append(title)
+                    .append(date)
                     .append(content)
                     .append(source);
             

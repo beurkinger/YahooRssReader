@@ -332,7 +332,6 @@ li
 
 .paper-hidden img
 {
-    display: none;
     height: auto;
     max-height: 100%;
     width: auto;
@@ -340,11 +339,6 @@ li
     padding: 20px;
     background: #FFFFFF;
     background-clip: padding-box;
-}
-
-.paper-hidden.paper-hidden-display img
-{
-    display: inline;
 }
 
 
@@ -370,10 +364,20 @@ li
 .paper-title
 {
     color: #058b7b;
-    font-size: 18px;
+    font-size: 20px;
+    line-height: 120%;
     font-family: 'Cinzel', georgia, serif;
     text-align: left;
     margin: 0 0 10px 170px;
+}
+
+.paper-date
+{
+    font-size: 13px;
+    font-family: 'Droid Serif', serif;
+    color: #777;
+    margin: 0 0 10px 180px;
+    font-style: italic;
 }
 
 .paper-content
