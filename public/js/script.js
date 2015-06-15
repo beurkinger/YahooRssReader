@@ -390,7 +390,7 @@ item.prototype.getHtml = function()
     
     var title =     $(document.createElement('div'))
                     .addClass('paper-title')
-                    .html(this.title);
+                    .html('<a href="this.url" target="_blank">'+this.title+'</a>');
     
     var date =   $(document.createElement('div'))
                     .addClass('paper-date')

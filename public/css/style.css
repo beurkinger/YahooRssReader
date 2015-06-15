@@ -1,6 +1,7 @@
 html
 {
     -webkit-font-smoothing: antialiased !important;
+    overflow-y: scroll; 
 }
 
 *
@@ -369,6 +370,11 @@ li
     font-family: 'Cinzel', georgia, serif;
     text-align: left;
     margin: 0 0 10px 170px;
+}
+
+.paper-title a:hover
+{
+    text-decoration: none;
 }
 
 .paper-date
