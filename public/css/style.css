@@ -295,6 +295,7 @@ li
 
 .paper-image
 {
+    position: relative;
     height: 150px;
     border-radius: 50%;
     margin: 0 0 20px 0;
@@ -302,6 +303,7 @@ li
     background-size: cover; 
     background-position: 50% 50%; 
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .paper-image:hover 
@@ -309,6 +311,20 @@ li
     border-radius: 5%;
     cursor: pointer;
     transition: border-radius 400ms; 
+}
+
+.paper-image:hover:after
+{
+    position: absolute;
+    width: 100%;
+    font-family: FontAwesome;
+    font-size : 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 65px 0;
+    content: "\f065"; 
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .paper-hidden
@@ -379,10 +395,10 @@ li
 
 .paper-date
 {
-    font-size: 13px;
+    font-size: 14px;
     font-family: 'Droid Serif', serif;
     color: #777;
-    margin: 0 0 10px 180px;
+    margin: 0 0 10px 170px;
     font-style: italic;
 }
 

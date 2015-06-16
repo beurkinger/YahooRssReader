@@ -241,7 +241,8 @@ RssReader.prototype.getChannel = function()
             description = $('<div>'+description+'</div>').text();
             var source = $(this).find('source').text();
             var sourceUrl = $(this).find('source').attr('href');
-            var imgUrl =  $(this).find('content').attr('url');
+            var imgUrl =  $(this).find('media\\:content, content').attr('url');
+            console.log(imgUrl);
             imgUrl = imgUrl !== undefined ? self.findImgUrl(imgUrl) : '';
             self.itemsList.push(new item(title, url, description, date, source, sourceUrl, imgUrl));
         });
@@ -305,6 +306,8 @@ RssReader.prototype.findTitle = function(text)
 //Méthode permettant de filtrer l'url de l'image d'un article
 RssReader.prototype.findImgUrl = function(url)
 {
+    console.log('toto');
+    console.log(url);
     var regEx = /(?:http:\/\/|https:\/\/)(?:.*)((http:\/\/|https:\/\/)(.*))/;
     var imgUrl = url.match(regEx);
     if (imgUrl)
@@ -379,10 +382,10 @@ item.prototype.getHtml = function()
     
     var image =     $(document.createElement('div'))
                     .addClass('paper-image')
-                    .css('backgroundImage','url('+this.imgUrl+')')
-                    .css('backgroundRepeat', 'no-repeat')
-                    .css('backgroundSize', 'cover')
-                    .css('backgroundPosition', 'center');
+                    .css('background-image','url("'+this.imgUrl+'")')
+                    .css('background-repeat', 'no-repeat')
+                    .css('background-size', 'cover')
+                    .css('background-position', 'center');
     
     var link =      $(document.createElement('div'))
                     .addClass('paper-link')
