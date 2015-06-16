@@ -215,7 +215,7 @@ RssReader.prototype.initMenu = function()
 RssReader.prototype.getChannel = function()
 {
     var self = this;
-    this.paperBox.html('<div id="spinner"><i class="fa fa-circle-o-notch fa-spin"></i></div>');
+    this.paperBox.html('<div id="spinner"><i class="fa fa-refresh fa-spin"></i></div>');
     $.ajax(
     {
         url: self.xmlUrl,
