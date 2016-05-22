@@ -285,7 +285,7 @@ li
     margin: 7px;
     border-color: lightgray;
     vertical-align: middle;
-    padding: 20px 20px 10px 20px;;
+    padding: 20px;
     line-height: normal;
     letter-spacing: normal;
     background-color: white;
@@ -386,7 +386,6 @@ li
     font-size: 19px;
     color: #555;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .paper-link a
@@ -430,7 +429,7 @@ li
     color: #333;
     text-align: justify;
     line-height: 120%;
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
 }
 
 .paper-content:first-letter
@@ -446,7 +445,6 @@ li
     font-size: 14px;
     color: #555;
     text-align: right;
-    margin: 0 0 10px 0;
 }
 
 

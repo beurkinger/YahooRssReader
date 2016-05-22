@@ -127,7 +127,7 @@ RssReader.prototype.getChannel = function()
             var description = $(this).find('description').text();
             description = $('<div>'+description+'</div>').text();
             var source = $(this).find('source').text();
-            var sourceUrl = $(this).find('source').attr('href');
+            var sourceUrl = $(this).find('source').attr('url');
             var imgUrl =  $(this).find('media\\:content, content').attr('url');
             imgUrl = imgUrl !== undefined ? self.findImgUrl(imgUrl) : '';
             self.itemsList.push(new item(title, url, description, date, source, sourceUrl, imgUrl));
@@ -291,7 +291,7 @@ item.prototype.getHtml = function()
             
     var source =    $(document.createElement('div'))
                     .addClass('paper-source')
-                    .html('Source : <a href="'+this.sourceUrl+'">'+this.source+'</a>'); 
+                    .html('Source : <a href="'+this.sourceUrl+'" target="_blank">'+this.source+'</a>'); 
     
     var clear =     $(document.createElement('div'))
                     .addClass('clear');
