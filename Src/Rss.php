@@ -10,7 +10,7 @@ namespace Src;
 class Rss
 {
     const DEF_HEADER = 'Xml-type: text/xml ; charset=utf-8';
-    const MAX_TRIES = 10;
+    const MAX_NB_TRY = 10;
     
     private $sourceUrl;
     private $header;
@@ -37,7 +37,7 @@ class Rss
             $string = file_get_contents($this->getSourceUrl());
             $xml = simplexml_load_string($string);
         }
-        while($xml === false && $tries <= self::MAX_TRIES);
+        while($xml === false && $tries <= self::MAX_NB_TRY);
         
         $this->setXml($xml);
         return $this;

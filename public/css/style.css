@@ -1,3 +1,15 @@
+@font-face 
+{
+    font-family: CrimsonText;
+    src: url(fonts/CrimsonText/CrimsonText-Roman.ttf);
+}
+
+@font-face 
+{
+    font-family: SourceSansPro;
+    src: url(fonts/SourceSansPro/SourceSansPro-Regular.ttf);
+}
+
 html
 {
     -webkit-font-smoothing: antialiased !important;
@@ -24,7 +36,7 @@ html
 body
 {
     background: #FFFFFF;
-    font-family: 'Droid Sans', sans-serif;
+    font-family: 'SourceSansPro', sans-serif;
     background-color: whitesmoke;
 }
 
@@ -135,7 +147,7 @@ li
     box-shadow: 0px 0px 10px 0px gray;
     font-style: normal;
     font-weight: normal;
-    color: #000000;
+    color: #000;
     opacity: 0;
     transition-delay: 500ms !important;
     transition: left 3s, opacity 1s;
@@ -177,9 +189,9 @@ li
     padding: 10px 20px;
     display: block;
     width: 200px;
-     font-size: 14px;
-    line-height: 14px;
-    font-family: 'Droid Sans', sans-serif;
+    font-size: 15px;
+    line-height: 15px;
+    //font-family: 'Droid Sans', sans-serif;
     
 }
 
@@ -238,7 +250,7 @@ li
 {
     position: static;
     margin: 70px auto 0 auto;
-    padding: 20px 0 0 0 ;
+    padding: 35px 0 0 0 ;
     letter-spacing: 0px;
     text-align: center;
     line-height:0px;
@@ -269,28 +281,36 @@ li
 {
     display: inline-block;
     position: relative;
-    width: 490px;
-    margin: 5px;
+    //width: 490px;
+    margin: 7px;
     border-color: lightgray;
     vertical-align: middle;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;;
     line-height: normal;
     letter-spacing: normal;
     background-color: white;
     box-shadow: 0 0px 10px rgba(0,0,0,0.15);
     text-align: left;
+    border-radius: 3px;
     
 }
 
-.paper:hover
-{
-    box-shadow: 0 3px 5px rgba(0,0,0,0.25);
-}
+//.paper:hover
+//{
+//    box-shadow: 0 0px 15px rgba(0,0,0,0.30);
+//}
 
 .paper-left
 {
     float: left;
     width: 150px;
+}
+
+.paper-right
+{
+    float: right;
+    padding-left: 30px;
+    width: 296px;
 }
 
 .paper-image
@@ -308,7 +328,7 @@ li
 
 .paper-image:hover 
 {
-    border-radius: 5%;
+    border-radius: 5px;
     cursor: pointer;
     transition: border-radius 400ms; 
 }
@@ -335,7 +355,7 @@ li
     left:0;
     width: 100%;
     height: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6);
     text-align: center;
     transition: height 200ms;
     overflow: hidden;
@@ -344,14 +364,15 @@ li
 .paper-hidden.paper-hidden-display
 {
     height: 100%;
-    transition: height 400ms;
+    transition: height 200ms;
 }
 
 .paper-hidden img
 {
     height: auto;
-    max-height: 100%;
+    max-height: 90%;
     width: auto;
+    max-width: 90%;
     border-top: 90px solid transparent;
     padding: 20px;
     background: #FFFFFF;
@@ -363,8 +384,9 @@ li
 {
     font-family: 'Cinzel', georgia, serif;
     font-size: 19px;
-    color: #777;
+    color: #555;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .paper-link a
@@ -382,10 +404,10 @@ li
 {
     color: #058b7b;
     font-size: 20px;
-    line-height: 120%;
-    font-family: 'Cinzel', georgia, serif;
+    line-height: 110%;
+    font-family: CrimsonText, georgia, serif;
     text-align: left;
-    margin: 0 0 10px 170px;
+    margin: 0 0 6px 0;
 }
 
 .paper-title a:hover
@@ -398,40 +420,40 @@ li
     font-size: 14px;
     font-family: 'Droid Serif', serif;
     color: #777;
-    margin: 0 0 10px 170px;
+    margin: 0 0 10px 0;
     font-style: italic;
 }
 
 .paper-content
 {
-    font-size: 14px;
-    color: #555;
+    font-size: 15px;
+    color: #333;
     text-align: justify;
-    line-height: 130%;
-    margin: 0 0 20px 170px;
+    line-height: 120%;
+    margin: 0 0 20px 0;
 }
 
 .paper-content:first-letter
 {
     float:left;
     padding: 8px 4px 0 0;
-    font-size: 34px;
-    color: #777 ;
+    font-size: 40px;
+    color: #555 ;
 }
 
 .paper-source
 {
-    font-size: 13px;
-    color: #777;
+    font-size: 14px;
+    color: #555;
     text-align: right;
-    margin: 0 0 10px 170px;
+    margin: 0 0 10px 0;
 }
 
 
 .paper-source:before
 {
     font-family: FontAwesome;
-    content: "\f1ea"; 
+    content: "\f1d8"; 
     padding-right: 5px;
 }
 

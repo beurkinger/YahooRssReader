@@ -14,142 +14,13 @@ function RssReader(rssUrl, title, url)
     //titre de la rubtrique, url de la rubrique sur le site Yahoo, liste des 
     //articles de la rubrique
     this.xmlUrl = 'getXML.php';
+    this.categoriesUrl = 'data/categories.json'
     this.rssUrl = rssUrl !== undefined ? rssUrl : '';
     this.title = title;
     this.url = url;
     this.itemsList = [];
     
-    //Liste des rubriques et sous rubriques, avec le lien des fluxs rss associés
-    this.categories = 
-    {
-        'Une' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/?format=rss'
-        },
-        'Monde' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/world',
-            subCategories :
-                {
-                    'Afrique' : 'https://fr.news.yahoo.com/rss/afrique',
-                    'Amérique du Nord' : 'https://fr.news.yahoo.com/rss/amerique-du-nord',
-                    'Amérique Latine' : 'https://fr.news.yahoo.com/rss/amerique-latine',
-                    'Asie' : 'https://fr.news.yahoo.com/rss/asie',
-                    'Europe' : 'https://fr.news.yahoo.com/rss/europe',
-                    'Moyen Orient' : 'https://fr.news.yahoo.com/rss/moyen-orient'
-                }
-        },
-        'France' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/france',
-            subCategories :
-                {
-                    'Justice' : 'https://fr.news.yahoo.com/rss/justice',
-                    'Faits Divers' : 'https://fr.news.yahoo.com/rss/faits-divers',
-                    'Emploi' : 'https://fr.news.yahoo.com/rss/emploi',
-                    'Société' : 'https://fr.news.yahoo.com/rss/societe'
-                }
-        },
-        'Politique' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/politique',
-            subCategories :
-                {
-                    'Extrême Gauche' : 'https://fr.news.yahoo.com/rss/extreme-gauche',
-                    'PS' : 'https://fr.news.yahoo.com/rss/ps',
-                    'Écologistes' : 'https://fr.news.yahoo.com/rss/ecologistes',
-                    'Centristes' : 'https://fr.news.yahoo.com/rss/centristes',
-                    'UMP' : 'https://fr.news.yahoo.com/rss/ump',
-                    'Extrême droite' : 'https://fr.news.yahoo.com/rss/extreme-droite'
-                }
-        },
-        'Économie' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/economie',
-            subCategories :
-                {
-                    'Banques & assurances' : 'https://fr.news.yahoo.com/rss/banques',
-                    'Bourse' : 'https://fr.news.yahoo.com/rss/bourse',
-                    'Énergie' : 'https://fr.news.yahoo.com/rss/energie',
-                    'Finances publiques' : 'https://fr.news.yahoo.com/rss/finances-publiques',
-                    'Monnaie' : 'https://fr.news.yahoo.com/rss/monnaies'
-                }
-        },
-        'Insolite' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/insolite',
-            subCategories :
-                {
-                    'Top Articles' : 'https://fr.news.yahoo.com/rss/insolites--top-articles',
-                    'Animaux insolites' : 'https://fr.news.yahoo.com/rss/animaux-insolites',
-                    'Amours insolites' : 'https://fr.news.yahoo.com/rss/amours-insolites',
-                    'Finances publiques' : 'https://fr.news.yahoo.com/rss/finances-publiques',
-                    'Cartoons' : 'https://fr.news.yahoo.com/rss/cartoons'
-                }
-        },
-        'People' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/people',
-            subCategories :
-                {
-                    'Closer' : 'https://fr.news.yahoo.com/rss/closer',
-                    'Gala' : 'https://fr.news.yahoo.com/rss/gala',
-                    'Premiere' : 'https://fr.news.yahoo.com/rss/premiere',
-                    'Pure People' : 'https://fr.news.yahoo.com/rss/pure-people',
-                    'Voici' : 'https://fr.news.yahoo.com/rss/voici',
-                    'Wenn' : 'https://fr.news.yahoo.com/rss/wenn'
-                }
-        },
-        'Technologies' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/technologies',
-            subCategories :
-                {
-                    'Hardware' : 'https://fr.news.yahoo.com/rss/hardware',
-                    'Internet' : 'https://fr.news.yahoo.com/rss/internet',
-                    'Jeux vidéos' : 'https://fr.news.yahoo.com/rss/jeux-video',
-                    'Logiciels' : 'https://fr.news.yahoo.com/rss/logiciels',
-                    'Telecoms' : 'https://fr.news.yahoo.com/rss/telecoms'
-                }
-        },
-        'Sports' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/sports',
-            subCategories :
-                {
-                    'Cyclisme' : 'https://fr.news.yahoo.com/rss/cyclisme',
-                    'Football' : 'https://fr.news.yahoo.com/rss/football',
-                    'Formule 1' : 'https://fr.news.yahoo.com/rss/formule-1',
-                    'Rugby' : 'https://fr.news.yahoo.com/rss/rugby',
-                    'Tennis' : 'https://fr.news.yahoo.com/rss/tennis'
-                }
-        },
-        'Sciences' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/sciences',
-            subCategories :
-                {
-                    'Catastrophes naturelles' : 'https://fr.news.yahoo.com/rss/catastrophes-naturelles',
-                    'Environnement' : 'https://fr.news.yahoo.com/rss/environnement',
-                    'Espace' : 'https://fr.news.yahoo.com/rss/espace',
-                    'Météo' : 'https://fr.news.yahoo.com/rss/meteo',
-                    'Nucléaire' : 'https://fr.news.yahoo.com/rss/nucleaire'
-                }
-        },
-        'Culture / Médias' :
-        {
-            rssUrl : 'https://fr.news.yahoo.com/rss/culture-medias',
-            subCategories :
-                {
-                    'Cinéma' : 'https://fr.news.yahoo.com/rss/cinema',
-                    'Livres' : 'https://fr.news.yahoo.com/rss/livres',
-                    'Mode' : 'https://fr.news.yahoo.com/rss/mode',
-                    'Musique' : 'https://fr.news.yahoo.com/rss/musique',
-                    'Presse écrite' : 'https://fr.news.yahoo.com/rss/presse-ecrite',
-                    'Télé et radios' : 'https://fr.news.yahoo.com/rss/tele-radios'
-                }
-        }
-    }; 
+    this.categories = {};
 };
 
 //Méthode permettant d'initialiser le reader
@@ -163,52 +34,68 @@ RssReader.prototype.init = function()
 RssReader.prototype.initMenu = function()
 {
     var self = this;
-    var categories = this.categories;
-    
-    for (var category in categories)
+
+    $.ajax(
     {
-        if (categories[category].hasOwnProperty('rssUrl'))
+        url: self.categoriesUrl,
+        type: 'GET',
+        cache: true
+    })
+    .done(function(json)
+    {
+        self.categories = json;
+        var categories = self.categories;
+        console.log(categories);
+        for (var category in categories)
         {
-            var li = $('<li></li>').append('<a href="#" rssUrl="'+categories[category]['rssUrl']+'">'+category +'</a>');
-            if (categories[category].hasOwnProperty('subCategories'))
+            if (categories[category].hasOwnProperty('rssUrl'))
             {
-                var subMenu = $('<ul class="subMenu"></ul>');
-                var subCategories = categories[category]['subCategories'];
-                for (var subCategory in subCategories)
+                var li = $('<li></li>').append('<a href="#" rssUrl="'+categories[category]['rssUrl']+'">'+category +'</a>');
+                if (categories[category].hasOwnProperty('subCategories'))
                 {
-                    var subLi = $('<li></li>').append('<a href="#" rssUrl = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
-                    subMenu.append(subLi);
+                    var subMenu = $('<ul class="subMenu"></ul>');
+                    var subCategories = categories[category]['subCategories'];
+                    for (var subCategory in subCategories)
+                    {
+                        var subLi = $('<li></li>').append('<a href="#" rssUrl = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
+                        subMenu.append(subLi);
+                    }
+                    li.append(subMenu);
                 }
-                li.append(subMenu);
+                self.menuContent.append(li);
             }
-            this.menuContent.append(li);
         }
-    }
-    
-    this.menuContent.find('a').click(function()
-    {
-        self.rssUrl = $(this).attr('rssUrl');
-        self.getChannel();
-        return false;
-    });
-    
-    this.menuButton.click(function()
-    {
-        if (self.menuContent.hasClass('menu-open'))
+        self.menuContent.find('a').click(function()
         {
-            self.menuContent.removeClass('menu-open').addClass('menu-close').delay(200);
-        }
-        else
+            self.rssUrl = $(this).attr('rssUrl');
+            self.getChannel();
+            return false;
+        });
+        
+        self.menuButton.click(function()
         {
-            self.menuContent.removeClass('menu-close').addClass('menu-open');
-        }
-        return false;
+            if (self.menuContent.hasClass('menu-open'))
+            {
+                self.menuContent.removeClass('menu-open').addClass('menu-close').delay(200);
+            }
+            else
+            {
+                self.menuContent.removeClass('menu-close').addClass('menu-open');
+            }
+            return false;
+        });
+        
+        self.menuContent.hover(function()
+        {
+            self.menuContent.removeClass('menu-open');
+        });
+    })
+    .fail(function(jqXHR, errorMessage)
+    {
+        console.log('Erreur : '+errorMessage);
     });
     
-    this.menuContent.hover(function()
-    {
-        self.menuContent.removeClass('menu-open');
-    });
+    
 };
 
 //Méthode permettant de récupérer et de filter le flux RSS d'une rubrique
@@ -220,7 +107,7 @@ RssReader.prototype.getChannel = function()
     {
         url: self.xmlUrl,
         type: 'GET',
-        cache: true,
+        cache: false,
         data: { url : self.rssUrl },
         dataType : 'xml'
     })
@@ -242,7 +129,6 @@ RssReader.prototype.getChannel = function()
             var source = $(this).find('source').text();
             var sourceUrl = $(this).find('source').attr('href');
             var imgUrl =  $(this).find('media\\:content, content').attr('url');
-            console.log(imgUrl);
             imgUrl = imgUrl !== undefined ? self.findImgUrl(imgUrl) : '';
             self.itemsList.push(new item(title, url, description, date, source, sourceUrl, imgUrl));
         });
@@ -306,13 +192,10 @@ RssReader.prototype.findTitle = function(text)
 //Méthode permettant de filtrer l'url de l'image d'un article
 RssReader.prototype.findImgUrl = function(url)
 {
-    console.log('toto');
-    console.log(url);
     var regEx = /(?:http:\/\/|https:\/\/)(?:.*)((http:\/\/|https:\/\/)(.*))/;
     var imgUrl = url.match(regEx);
     if (imgUrl)
     {
-        
         return imgUrl[1]; 
     }
     return url;   
@@ -391,9 +274,12 @@ item.prototype.getHtml = function()
                     .addClass('paper-link')
                     .html('<a href="'+this.url+'" target="_blank">Voir l\'article</a>');
     
+    var right =     $(document.createElement('div'))
+                    .addClass('paper-right');
+
     var title =     $(document.createElement('div'))
                     .addClass('paper-title')
-                    .html('<a href="this.url" target="_blank">'+this.title+'</a>');
+                    .html('<a href="'+this.url+'" target="_blank">'+this.title+'</a>');
     
     var date =   $(document.createElement('div'))
                     .addClass('paper-date')
@@ -407,15 +293,21 @@ item.prototype.getHtml = function()
                     .addClass('paper-source')
                     .html('Source : <a href="'+this.sourceUrl+'">'+this.source+'</a>'); 
     
+    var clear =     $(document.createElement('div'))
+                    .addClass('clear');
+
     left            .append(image)
                     .append(link);
     
-    paper           .append(hidden)
-                    .append(left)
-                    .append(title)
+    right           .append(title)
                     .append(date)
                     .append(content)
-                    .append(source);
+                    .append(source)
+
+    paper           .append(hidden)
+                    .append(left)
+                    .append(right)
+                    .append(clear);
             
     image.click(function()
     {
