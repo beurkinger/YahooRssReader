@@ -39,13 +39,14 @@ RssReader.prototype.initMenu = function()
     {
         url: self.categoriesUrl,
         type: 'GET',
-        cache: true
+        cache: true,
+        dataType : 'json'
     })
     .done(function(json)
     {
         self.categories = json;
         var categories = self.categories;
-        // console.log(categories);
+        console.log(categories);
         for (var category in categories)
         {
             if (categories[category].hasOwnProperty('rssUrl'))
