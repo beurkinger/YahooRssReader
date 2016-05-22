@@ -5,10 +5,8 @@ function RssReader(rssUrl, title, url)
     this.menu = $('#menu');
     this.menuButton = $('#menu-button');
     this.menuContent = $('#menu-content');
-    this.pageTitle = $('#header-title');
+    this.pageTitle = $('#page-title');
     this.paperBox = $('#paper-box');
-//    this.leftColumn = $('#column-left', this.paperBox);
-//    this.rightColumn = $('#column-right', this.paperBox);
     
     //Fichier php permettant de récupérer le flux rss, url du flux en question,
     //titre de la rubtrique, url de la rubrique sur le site Yahoo, liste des 
@@ -19,8 +17,9 @@ function RssReader(rssUrl, title, url)
     this.title = title;
     this.url = url;
     this.itemsList = [];
-    
     this.categories = {};
+
+    this.loadingMessage = "Chargement";
 };
 
 //Méthode permettant d'initialiser le reader
@@ -102,6 +101,7 @@ RssReader.prototype.initMenu = function()
 RssReader.prototype.getChannel = function()
 {
     var self = this;
+    this.pageTitle.html(this.loadingMessage);
     this.paperBox.html('<div id="spinner"><i class="fa fa-refresh fa-spin"></i></div>');
     $.ajax(
     {
@@ -145,7 +145,7 @@ RssReader.prototype.getChannel = function()
 RssReader.prototype.printChannel = function()
 {
     var self = this;
-    this.pageTitle.html('<a href="'+this.url+'">'+this.title+'</a>');
+    this.pageTitle.html('<a href="'+this.url+'" target="_blank">'+this.title+'</a>');
     var leftBuffer = $('<div></div>').attr('id', 'column-left');
     var rightBuffer = $('<div></div>').attr('id', 'column-right');
     for (i=0; i < self.itemsList.length; i++)
