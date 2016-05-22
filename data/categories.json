@@ -1,7 +1,7 @@
 {
     "Une" :
     {
-        "rssUrl" : "https://fr.news.yahoo.com/?format=rss"
+        "rssUrl" : "https://fr.news.yahoo.com/?nf=1&format=rss"
     },
     "Monde" :
     {

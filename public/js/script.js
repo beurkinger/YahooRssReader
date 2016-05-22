@@ -4,6 +4,7 @@ function RssReader(rssUrl, title, url)
     //Containeurs du menu, du titre, et du corps de la page
     this.menu = $('#menu');
     this.menuButton = $('#menu-button');
+    this.menuBg = $('#menu-bg');
     this.menuContent = $('#menu-content');
     this.pageTitle = $('#page-title');
     this.paperBox = $('#paper-box');
@@ -44,19 +45,19 @@ RssReader.prototype.initMenu = function()
     {
         self.categories = json;
         var categories = self.categories;
-        console.log(categories);
+        // console.log(categories);
         for (var category in categories)
         {
             if (categories[category].hasOwnProperty('rssUrl'))
             {
-                var li = $('<li></li>').append('<a href="#" rssUrl="'+categories[category]['rssUrl']+'">'+category +'</a>');
+                var li = $('<li class="menu-item"></li>').append('<a href="#" rssUrl="'+categories[category]['rssUrl']+'">'+category +'</a>');
                 if (categories[category].hasOwnProperty('subCategories'))
                 {
-                    var subMenu = $('<ul class="subMenu"></ul>');
+                    var subMenu = $('<ul class="submenu"></ul>');
                     var subCategories = categories[category]['subCategories'];
                     for (var subCategory in subCategories)
                     {
-                        var subLi = $('<li></li>').append('<a href="#" rssUrl = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
+                        var subLi = $('<li class="submenu-item"></li>').append('<a href="#" rssUrl = "'+subCategories[subCategory]+'">'+subCategory+'</a>');
                         subMenu.append(subLi);
                     }
                     li.append(subMenu);
@@ -70,24 +71,45 @@ RssReader.prototype.initMenu = function()
             self.getChannel();
             return false;
         });
+
+        self.menuContent.find('.menu-item').click(function()
+        {
+            $(this).toggleClass('menu-item-open');
+            return false;
+        });
+
+        self.menuContent.find('.submenu-item').click(function()
+        {
+            return false;
+        });
+
+        self.menuContent.find('a').click(function()
+        {
+            self.menu.removeClass('menu-open').addClass('menu-close');
+        });
         
         self.menuButton.click(function()
         {
-            if (self.menuContent.hasClass('menu-open'))
+            if (self.menu.hasClass('menu-open'))
             {
-                self.menuContent.removeClass('menu-open').addClass('menu-close').delay(200);
+                self.menu.removeClass('menu-open').addClass('menu-close');
             }
             else
             {
-                self.menuContent.removeClass('menu-close').addClass('menu-open');
+                self.menu.removeClass('menu-close').addClass('menu-open');
             }
             return false;
         });
-        
-        self.menuContent.hover(function()
+
+        self.menuBg.click(function()
         {
-            self.menuContent.removeClass('menu-open');
+            self.menu.removeClass('menu-open').addClass('menu-close');
         });
+        
+        // self.menuContent.hover(function()
+        // {
+        //     self.menuContent.removeClass('menu-open');
+        // });
     })
     .fail(function(jqXHR, errorMessage)
     {
