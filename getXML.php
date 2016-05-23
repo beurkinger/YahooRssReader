@@ -1,6 +1,6 @@
 <?php
-include 'Src/Rss.php';
-use Src\Rss;
+include 'src/Rss.php';
+use src\Rss;
 
 define('DEF_URL', 'https://fr.news.yahoo.com/?nf=1&format=rss');
         

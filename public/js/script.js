@@ -4,7 +4,8 @@ function RssReader(rssUrl, title, url)
     //Containeurs du menu, du titre, et du corps de la page
     this.menu = $('#menu');
     this.menuButton = $('#menu-button');
-    this.menuBg = $('#menu-bg');
+    this.about = $('#about');
+    this.aboutButton = $('#about-button');
     this.menuContent = $('#menu-content');
     this.pageTitle = $('#page-title');
     this.paperBox = $('#paper-box');
@@ -26,6 +27,7 @@ function RssReader(rssUrl, title, url)
 //Méthode permettant d'initialiser le reader
 RssReader.prototype.init = function()
 {
+    this.initAboutEvents();
     this.initMenu();
     this.getChannel();
 };
@@ -46,7 +48,6 @@ RssReader.prototype.initMenu = function()
     {
         self.categories = json;
         var categories = self.categories;
-        console.log(categories);
         for (var category in categories)
         {
             if (categories[category].hasOwnProperty('rssUrl'))
@@ -66,58 +67,66 @@ RssReader.prototype.initMenu = function()
                 self.menuContent.append(li);
             }
         }
-        self.menuContent.find('a').click(function()
-        {
-            self.rssUrl = $(this).attr('rssUrl');
-            self.getChannel();
-            return false;
-        });
-
-        self.menuContent.find('.menu-item').click(function()
-        {
-            $(this).toggleClass('menu-item-open');
-            return false;
-        });
-
-        self.menuContent.find('.submenu-item').click(function()
-        {
-            return false;
-        });
-
-        self.menuContent.find('a').click(function()
-        {
-            self.menu.removeClass('menu-open').addClass('menu-close');
-        });
-        
-        self.menuButton.click(function()
-        {
-            if (self.menu.hasClass('menu-open'))
-            {
-                self.menu.removeClass('menu-open').addClass('menu-close');
-            }
-            else
-            {
-                self.menu.removeClass('menu-close').addClass('menu-open');
-            }
-            return false;
-        });
-
-        self.menuBg.click(function()
-        {
-            self.menu.removeClass('menu-open').addClass('menu-close');
-        });
-        
-        // self.menuContent.hover(function()
-        // {
-        //     self.menuContent.removeClass('menu-open');
-        // });
+        self.initMenuEvents();
     })
     .fail(function(jqXHR, errorMessage)
     {
         console.log('Erreur : '+errorMessage);
     });
+};
+
+//Méthode qui initialise les évenements sur les boutons du menu
+RssReader.prototype.initMenuEvents = function()
+{
+    var self = this;
+    self.menuContent.find('a').click(function()
+    {
+        self.rssUrl = $(this).attr('rssUrl');
+        self.getChannel();
+        self.menu.toggleClass('menu-open');
+        return false;
+    });
+
+    self.menuContent.find('.menu-item').click(function()
+    {
+        $(this).toggleClass('menu-item-open');
+        return false;
+    });
+
+    self.menuContent.find('.submenu-item').click(function()
+    {
+        return false;
+    });
+
+    self.menuButton.click(function()
+    {
+        self.menu.toggleClass('menu-open');
+        return false;
+    });
+
+    self.menu.click(function()
+    {
+        self.menu.toggleClass('menu-open');
+        return false;
+    });
+};
+
+//Initialise les events du bouton about
+RssReader.prototype.initAboutEvents = function()
+{
+    var self = this;
+
+    self.aboutButton.click(function()
+    {
+        self.about.toggleClass('about-open');
+        return false;
+    });
     
-    
+    self.about.click(function()
+    {
+        self.about.toggleClass('about-open');
+        return false;
+    });
 };
 
 //Méthode permettant de récupérer et de filter le flux RSS d'une rubrique
