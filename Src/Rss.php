@@ -5,7 +5,7 @@
  * @author Thibault Goehringer
  */
 
-namespace Src;
+namespace src;
 
 class Rss
 {
