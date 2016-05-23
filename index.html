@@ -30,7 +30,21 @@
             <div id="about-content">
                 <h2>À propos</h2>
                 <p>
-                    test
+                    Cette appplication web est un petit lecteur de flux RSS dédié à Yahoo Actualités.
+                    Elle vise à récupérer les fils d'information de Yahoo (qui se présentent normalement
+                    sous <a href="https://fr.news.yahoo.com/rss/world" target="_blank">cette forme</a>) 
+                    et à les rendre consultable d'une manière agréable (enfin, je l'espère).
+                </p>
+                <p>
+                    Ce petit projet a constitué à l'origine pour moi une manière de me familiariser avec
+                    Javascript, et d'aborder plusieurs technologies Ajax (DOM, XMLHttpRequest,
+                    XML, etc.).
+                </p>
+                <p>
+                    D'un point de vue technique, le script commence par récupérer le fichier XML
+                    du flux demandé auprès d'une page PHP dédiée. Il parcourt ensuite le DOM
+                    du fichier afin d'en extraire les informations pertinentes (à l'aide de regex,
+                    si nécessaire), qu'il réinjecte ensuite au sein du DOM de la présente page.
                 </p>
             </div>
         </div>

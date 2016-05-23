@@ -148,13 +148,10 @@ li
 
 #about-content
 {
-    /*display: none;*/
     z-index: 60;
     position: relative;
-    /*top: 90px;*/
     top: -600px;
     width: 600px;
-    /*height: 0;*/
     margin: 0 auto;
     background : white;
     border: 1px solid lightgray;
@@ -181,7 +178,7 @@ li
 
 #about-content p
 {
-    padding: 10px 20px;
+    margin: 20px;
 }
 
 #about.about-open #about-content
