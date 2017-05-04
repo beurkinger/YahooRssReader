@@ -1,10 +1,10 @@
-@font-face 
+@font-face
 {
     font-family: CrimsonText;
     src: url(fonts/CrimsonText/CrimsonText-Roman.ttf);
 }
 
-@font-face 
+@font-face
 {
     font-family: SourceSansPro;
     src: url(fonts/SourceSansPro/SourceSansPro-Regular.ttf);
@@ -13,7 +13,7 @@
 html
 {
     -webkit-font-smoothing: antialiased !important;
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
 
 *
@@ -30,7 +30,7 @@ html
     -ms-hyphens: auto;
     -o-hyphens: auto;
     hyphens: auto;
-    word-wrap : break-word;  
+    word-wrap : break-word;
 }
 
 body
@@ -43,12 +43,12 @@ body
 a
 {
     color: #058b7b;
-    text-decoration : none;    
+    text-decoration : none;
 }
 
 a:hover
 {
-    text-decoration : underline;   
+    text-decoration : underline;
 }
 
 li
@@ -218,7 +218,7 @@ li
     width: 200px;
     font-size: 15px;
     line-height: 15px;
-    
+
 }
 
 #menu-content li:hover
@@ -321,7 +321,7 @@ li.menu-item-open .submenu
     text-align: center;
     line-height:0px;
     vertical-align: top;
-    width: 1000px;
+    width: 1012px;
 }
 
 #spinner
@@ -334,13 +334,13 @@ li.menu-item-open .submenu
 #column-left
 {
     float: left;
-    width: 500px;
+    width: 506px;
 }
 
 #column-right
 {
     float: right;
-    width: 500px;
+    width: 506px;
 }
 
 .paper
@@ -348,7 +348,7 @@ li.menu-item-open .submenu
     display: inline-block;
     position: relative;
     //width: 490px;
-    margin: 7px;
+    margin: 10px;
     border-color: lightgray;
     vertical-align: middle;
     padding: 20px;
@@ -358,7 +358,7 @@ li.menu-item-open .submenu
     box-shadow: 0 0px 10px rgba(0,0,0,0.15);
     text-align: left;
     border-radius: 3px;
-    
+
 }
 
 //.paper:hover
@@ -386,17 +386,17 @@ li.menu-item-open .submenu
     border-radius: 50%;
     margin: 0 0 20px 0;
     background-color: aliceblue;
-    background-size: cover; 
-    background-position: 50% 50%; 
+    background-size: cover;
+    background-position: 50% 50%;
     background-repeat: no-repeat;
     overflow: hidden;
 }
 
-.paper-image:hover 
+.paper-image:hover
 {
     border-radius: 5px;
     cursor: pointer;
-    transition: border-radius 400ms; 
+    transition: border-radius 400ms;
 }
 
 .paper-image:hover:after
@@ -408,7 +408,7 @@ li.menu-item-open .submenu
     line-height: 30px;
     text-align: center;
     padding: 65px 0;
-    content: "\f065"; 
+    content: "\f065";
     color: rgba(255, 255, 255, 0.9);
     background-color: rgba(0, 0, 0, 0.3);
 }
@@ -495,7 +495,7 @@ li.menu-item-open .submenu
     color: #333;
     text-align: justify;
     line-height: 120%;
-    margin: 0 0 10px 0;
+    margin: 0 0 14px 0;
 }
 
 .paper-content:first-letter
@@ -510,14 +510,14 @@ li.menu-item-open .submenu
 {
     font-size: 14px;
     color: #555;
-    text-align: right;
+    /*text-align: right;*/
 }
 
 
 .paper-source:before
 {
     font-family: FontAwesome;
-    content: "\f1d8"; 
+    content: "\f1d8";
     padding-right: 5px;
 }
 
@@ -525,4 +525,3 @@ li.menu-item-open .submenu
 {
     clear: both;
 }
-
